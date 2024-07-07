@@ -23,17 +23,23 @@ exports.createNewContact = async (req, res) => {
       user = await User.create({
         name: req.body.name,
         email: req.body.email,
-        phone: req.body.phone,
+        phone: req.body.phoneNumber,
       });
     }
 
     // Create the new contact
+    let Status = "Pending";
+    if (req.body.topic == "Feedback") {
+      Status = "Feedback";
+    }
+
     await Contact.create({
       name: req.body.name,
       email: req.body.email,
       phoneNumber: req.body.phoneNumber,
       topic: req.body.topic,
       message: req.body.message,
+      status: Status,
       user: user._id, // Link to the user object ID
     });
     const html = emailTemplate(req.body.name, req.body.topic);

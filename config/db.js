@@ -1,3 +1,4 @@
+const { required } = require("joi");
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 require("./dotenv"); // Ensure the dotenv configuration is loaded
@@ -55,7 +56,7 @@ const ContactSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      num: ["Pending", "Resolved", "Feedback", "In Progress"],
+      enum: ["Pending", "Resolved", "InProgress", "Feedback"],
       default: "Pending",
     },
     user: { type: Schema.Types.ObjectId, ref: "User", required: true },
